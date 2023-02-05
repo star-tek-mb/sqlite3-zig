@@ -1,14 +1,18 @@
 const std = @import("std");
 
 pub fn build(b: *std.build.Builder) void {
-    const mode = b.standardReleaseOptions();
+    const target = b.standardTargetOptions(.{});
+    const optimize = b.standardOptimizeOption(.{});
 
-    const lib = b.addStaticLibrary("sqlite3", null);
+    const lib = b.addStaticLibrary(.{
+        .name = "sqlite3",
+        .target = target,
+        .optimize = optimize,
+    });
     lib.addCSourceFile("sqlite3.c", &.{
         "-std=c99",
     });
     lib.addIncludePath(".");
-    lib.setBuildMode(mode);
     lib.linkLibC();
     lib.install();
     lib.installHeader("sqlite3.h", "sqlite3.h");
