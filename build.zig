@@ -14,8 +14,8 @@ pub fn build(b: *std.build.Builder) void {
     });
     lib.addIncludePath(".");
     lib.linkLibC();
+    lib.installHeader("sqlite3.h", "sqlite3.h");
+    lib.installHeader("sqlite3ext.h", "sqlite3ext.h");
 
-    _ = b.addInstallArtifact(lib);
-    _ = b.addInstallHeaderFile("sqlite3.h", "sqlite3.h");
-    _ = b.addInstallHeaderFile("sqlite3ext.h", "sqlite3ext.h");
+    b.installArtifact(lib);
 }
